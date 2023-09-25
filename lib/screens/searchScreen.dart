@@ -36,7 +36,7 @@ class _SearchScreenState extends State<SearchScreen> {
     if (searchItemsList.isNotEmpty) searchItemsList.clear();
     try {
       final List response =
-          await ApiClient().callGetAPI("${searchEndpoint}?name=$query");
+          await ApiClient().callGetAPI("${searchEndpoint}${query}");
       if (response.isNotEmpty) {
         setState(() {
           searchItemsList.addAll(response);
