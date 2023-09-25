@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "982504881045",
+    "project_id": "dr-ortho-94413",
+    "storage_bucket": "dr-ortho-94413.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:982504881045:android:0581ab344e8bc2da1f549c",
+        "android_client_info": {
+          "package_name": "com.dr.ortho.drortho"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "982504881045-98frsjc309u43smvhiv0r9ttgnab6qb1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dr.ortho.drortho",
+            "certificate_hash": "125ac94f58f1629d977f47984e860f1c5ea5fbff"
+          }
+        },
+        {
+          "client_id": "982504881045-s4qepfbn4pn7iqn82h4ta941uqscq83d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHrOohSiWqLGKCh8mwBEDdgLKbQIZ_MN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "982504881045-eglmm9qb1sm8gdl53vdndp2qoqmm4s4o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
