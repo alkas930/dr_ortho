@@ -35,8 +35,9 @@ class _SearchScreenState extends State<SearchScreen> {
     });
     if (searchItemsList.isNotEmpty) searchItemsList.clear();
     try {
-      final List response =
-          await ApiClient().callGetAPI("${searchEndpoint}${query}");
+      final List response = await ApiClient()
+          .callGetAPI("${searchEndpoint}${query}");
+
       if (response.isNotEmpty) {
         setState(() {
           searchItemsList.addAll(response);
@@ -92,6 +93,7 @@ class _SearchScreenState extends State<SearchScreen> {
             isComponent: false,
             searchInputController: inputController,
             onTextChange: (String query) {
+              searchItemsList.toList();
               if (query.length >= 3) {
                 if (_debounce?.isActive ?? false) _debounce?.cancel();
                 _debounce = Timer(const Duration(milliseconds: 300), () {
