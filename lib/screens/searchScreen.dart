@@ -4,7 +4,9 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:drortho/constants/apiconstants.dart';
+import 'package:drortho/main.dart';
 import 'package:drortho/utilities/apiClient.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
 import 'package:provider/provider.dart';
@@ -35,8 +37,8 @@ class _SearchScreenState extends State<SearchScreen> {
     });
     if (searchItemsList.isNotEmpty) searchItemsList.clear();
     try {
-      final List response = await ApiClient()
-          .callGetAPI("${searchEndpoint}${query}");
+      final List response =
+          await ApiClient().callGetAPI("${searchEndpoint}${query}");
 
       if (response.isNotEmpty) {
         setState(() {
@@ -94,10 +96,12 @@ class _SearchScreenState extends State<SearchScreen> {
             searchInputController: inputController,
             onTextChange: (String query) {
               searchItemsList.toList();
+              final String findProd = query.trim().replaceAll(' ', '');
+
               if (query.length >= 3) {
                 if (_debounce?.isActive ?? false) _debounce?.cancel();
                 _debounce = Timer(const Duration(milliseconds: 300), () {
-                  searchItems(query);
+                  searchItems(findProd);
                 });
               }
             },

@@ -806,6 +806,74 @@ class _TextWrapperState extends State<TextWrapper>
   }
 }
 
+Container quantityChangeWrapper(CartModel cartItem, CartProvider cartProvider) {
+  return Container(
+    margin: const EdgeInsets.only(right: 16),
+    clipBehavior: Clip.hardEdge,
+    decoration: BoxDecoration(
+      border:
+          Border.all(color: bottomBarColor, width: 1, style: BorderStyle.solid),
+      borderRadius: const BorderRadius.all(
+        Radius.circular(50),
+      ),
+    ),
+    child: Row(
+      children: [
+        GestureDetector(
+          onTap: () {
+            Map<String, dynamic> values = cartItem.toMap();
+            if (cartItem.quantity! - 1 <= 0) {
+              cartProvider.deleteCartItem(cartItem.id!);
+            } else {
+              values["quantity"] = cartItem.quantity! - 1;
+              cartProvider.updateCartItems(
+                  CartModel.fromMap(values), cartItem.id);
+            }
+          },
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            decoration: const BoxDecoration(
+              color: lightBlueColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(50),
+                bottomLeft: Radius.circular(50),
+              ),
+            ),
+            child: const Text("-"),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Text(
+            cartItem.quantity.toString(),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            Map<String, dynamic> values = cartItem.toMap();
+            if (cartItem.quantity! + 1 < 6) {
+              values["quantity"] = cartItem.quantity! + 1;
+              cartProvider.updateCartItems(
+                  CartModel.fromMap(values), cartItem.id);
+            }
+          },
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            decoration: const BoxDecoration(
+              color: lightBlueColor,
+              borderRadius: BorderRadius.only(
+                bottomRight: Radius.circular(50),
+                topRight: Radius.circular(50),
+              ),
+            ),
+            child: const Text("+"),
+          ),
+        )
+      ],
+    ),
+  );
+}
+
 class SelctedSize extends StatefulWidget {
   final Map product;
   final Function showBuyToUpdateAddressSnackbar;
@@ -1077,6 +1145,7 @@ class _SelctedSizeState extends State<SelctedSize> {
                       : themeRed),
             ),
           ),
+          // quantityChangeWrapper(cartItem, cartProvider),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 7),
             child: Container(
@@ -1151,7 +1220,7 @@ class _SelctedSizeState extends State<SelctedSize> {
                   name: product["name"],
                   desc: product["short_description"],
                   image: product["images"][0]["src"],
-                  quantity: 1,
+                  quantity: int.parse('${_selectedItem}'),
                   regularprice: product["regular_price"],
                   saleprice: product["sale_price"],
                   onsale: product["on_sale"] == true ? 1 : 0,

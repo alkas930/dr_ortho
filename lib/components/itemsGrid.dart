@@ -92,7 +92,7 @@ class ItemsGrid extends StatelessWidget {
                                           color: Colors.white),
                                     )
                                   : Padding(
-                                      padding: const EdgeInsets.only(top: 4),
+                                      padding: const EdgeInsets.all(10),
                                       child: Image.network(images[0]['src']),
                                     )),
                         ),

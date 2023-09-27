@@ -2,6 +2,7 @@ import 'package:drortho/screens/allProducts.dart';
 import 'package:drortho/screens/authentication.dart';
 import 'package:drortho/screens/cartScreen.dart';
 import 'package:drortho/screens/categoryItemsScreen.dart';
+import 'package:drortho/screens/forgotPassword.dart';
 import 'package:drortho/screens/orderDetailScreen.dart';
 import 'package:drortho/screens/ordersScreen.dart';
 import 'package:drortho/screens/productDetails.dart';
@@ -26,6 +27,7 @@ const tabsRoute = "/tabs";
 const searchScreen = "/searchSceeen";
 const webviewRoute = "/webview";
 const qrScannerRoute = "/qrScanner";
+const forgotPassword = "/forgotpassword";
 
 final routes = {
   initialRoute: (context) => const SplashScreen(),
@@ -43,6 +45,7 @@ final routes = {
   productDetailsRoute: (context) => const ProductDetails(),
   tabsRoute: (context) => const TabBarScreen(),
   webviewRoute: (context) => const WebviewScreen(),
+  forgotPassword: (context) => const ForgotPassword(),
   searchScreen: (context) => const SearchScreen(),
   allProductsRoute: (context) => const AllProductsScreen(),
   qrScannerRoute: (context) => const QrScanner(),

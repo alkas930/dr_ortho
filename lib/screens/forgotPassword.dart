@@ -15,14 +15,14 @@ import '../utilities/apiClient.dart';
 import 'dart:developer';
 import '../utilities/databaseProvider.dart';
 
-class AuthenticationScreen extends StatefulWidget {
-  const AuthenticationScreen({super.key});
+class ForgotPassword extends StatefulWidget {
+  const ForgotPassword({super.key});
 
   @override
-  State<AuthenticationScreen> createState() => _AuthenticationScreenState();
+  State<ForgotPassword> createState() => _ForgotPasswordState();
 }
 
-class _AuthenticationScreenState extends State<AuthenticationScreen> {
+class _ForgotPasswordState extends State<ForgotPassword> {
   int? _type = 1; //0 -> sign up, 1 -> sign in
   final _formKey = GlobalKey<FormState>();
   final emailInputController = TextEditingController();
@@ -192,7 +192,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  welcomeText,
+                  'forgot passwrod?',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: bottomBarColor,
@@ -204,37 +204,6 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                       border: Border.all(width: 1, color: Colors.grey)),
                   child: Column(
                     children: [
-                      RadioListTile(
-                        tileColor:
-                            _type == 0 ? Colors.transparent : radioTileColor,
-                        dense: true,
-                        activeColor: radioButtonColor,
-                        value: 0,
-                        groupValue: _type,
-                        onChanged: (value) {
-                          setState(() {
-                            _type = value;
-                          });
-                        },
-                        title: RichText(
-                          text: const TextSpan(
-                            children: [
-                              TextSpan(
-                                text: createAccountText,
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              TextSpan(
-                                text: newMemberText,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
                       if (_type == 0)
                         ...authForm(
                             _formKey,
@@ -244,37 +213,48 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                             registerUser,
                             homeProvider,
                             cartProvider),
-                      RadioListTile(
-                        tileColor:
-                            _type == 1 ? Colors.transparent : radioTileColor,
-                        dense: true,
-                        activeColor: radioButtonColor,
-                        value: 1,
-                        groupValue: _type,
-                        onChanged: (value) {
-                          setState(() {
-                            _type = value;
-                          });
-                        },
-                        title: RichText(
-                          text: const TextSpan(
-                            children: [
-                              TextSpan(
-                                text: signInText,
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              TextSpan(
-                                text: alreadyMemberText,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ],
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 13),
+                        child: Center(
+                          child: Text(
+                            'Create new password',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
+                      // RadioListTile(
+                      //   // tileColor:
+                      //   //     _type == 1 ? Colors.transparent : radioTileColor,
+                      //   dense: true,
+                      //   activeColor: radioButtonColor,
+                      //   value: 1,
+                      //   groupValue: _type,
+                      //   onChanged: (value) {
+                      //     setState(() {
+                      //       _type = value;
+                      //     });
+                      //   },
+                      //   title: RichText(
+                      //     text: const TextSpan(
+                      //       children: [
+                      //         TextSpan(
+                      //           text: 'Create new password',
+                      //           style: TextStyle(
+                      //               color: Colors.black,
+                      //               fontWeight: FontWeight.bold),
+                      //         ),
+                      //         // TextSpan(
+                      //         //   text: alreadyMemberText,
+                      //         //   style: TextStyle(
+                      //         //     color: Colors.black,
+                      //         //   ),
+                      //         // ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
                       if (_type == 1)
                         ...authForm(
                             _formKey,
@@ -293,10 +273,6 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
         ),
       ),
     );
-  }
-
-  bool _isGmail(String email) {
-    return email.endsWith('@gmail.com');
   }
 
   List<Widget> authForm(
@@ -318,7 +294,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                 maxLines: 1,
                 controller: emailInputController,
                 decoration: const InputDecoration(
-                  hintText: emailHintText,
+                  hintText: 'new password',
                   hintStyle: TextStyle(color: hintTextColor),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: themeRed, width: 2),
@@ -332,19 +308,22 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                 ),
                 style: const TextStyle(fontSize: 12),
                 textInputAction: TextInputAction.next,
-                validator: (value) {
-                  if (value!.isEmpty ||
-                      !RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-                          .hasMatch(value)) {
-                    return 'Please enter a valid email';
-                  }
+                validator: (value) => value!.length < 8 || value.length > 16
+                    ? 'Password should be 8-16 characters.'
+                    : null,
+                // validator: (value) {
+                //   if (value!.isEmpty ||
+                //       !RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+                //           .hasMatch(value)) {
+                //     return 'Please enter a valid email';
+                //   }
 
-                  if (!_isGmail(value)) {
-                    return 'Please enter a valid email address';
-                  }
+                //   if (!_isGmail(value)) {
+                //     return 'Please enter a valid email address';
+                //   }
 
-                  return null;
-                },
+                //   return null;
+                // },
                 keyboardType: TextInputType.emailAddress,
               ),
             ),
@@ -354,7 +333,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                 maxLines: 1,
                 controller: passwordInputController,
                 decoration: const InputDecoration(
-                  hintText: passwordHintText,
+                  hintText: 'confirm new password',
                   hintStyle: TextStyle(color: hintTextColor),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: themeRed, width: 2),
@@ -370,29 +349,13 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                 textInputAction: TextInputAction.done,
                 obscureText: true,
                 validator: (value) => value!.length < 8 || value.length > 16
-                    ? 'Password should be 8-16 characters.'
+                    ? 'confirm your password'
                     : null,
               ),
             ),
           ],
         ),
       ),
-      _type == 0
-          ? Text('')
-          : Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Checkbox(
-                    activeColor: bottomBarColor,
-                    value: agree,
-                    onChanged: (value) {
-                      setState(() {
-                        agree = value ?? false;
-                      });
-                    }),
-                const Text('Remember me')
-              ],
-            ),
       GestureDetector(
         onTap: () {
           if (validate()) {
@@ -408,58 +371,13 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
               color: bottomBarColor,
               borderRadius: BorderRadius.all(Radius.circular(5))),
           child: const Text(
-            continueText,
+            'Reset Password',
             style: TextStyle(
               color: Colors.white,
               fontSize: 14,
             ),
             textAlign: TextAlign.center,
           ),
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, forgotPassword);
-              },
-              child: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 8),
-                child: Text(
-                  forgotPasswordText,
-                  style: TextStyle(
-                    color: bottomBarColor,
-                    fontSize: 10,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                homeProvider.showLoader();
-                cartProvider.cleanCartItems();
-                setSharedPref(true);
-                Navigator.pushNamedAndRemoveUntil(
-                    context, tabsRoute, (route) => false);
-                homeProvider.hideLoader();
-              },
-              child: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 8),
-                child: Text(
-                  skipText,
-                  style: TextStyle(
-                    color: bottomBarColor,
-                    fontSize: 10,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-          ],
         ),
       ),
       const Padding(
