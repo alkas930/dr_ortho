@@ -36,6 +36,8 @@ const String createAccountText = "Create Account.";
 const String newMemberText = " New member?";
 const String signInText = "Sign in.";
 const String alreadyMemberText = " Already a member?";
+
+
 const String continueText = "Continue";
 const String forgotPasswordText = "Forgot Password?";
 const String skipText = "Skip";

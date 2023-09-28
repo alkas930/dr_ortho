@@ -103,7 +103,7 @@ class OrderDetailScreen extends StatelessWidget {
                                       child: Row(
                                         children: [
                                           CardTextItem(orderNumber),
-                                          CardTextItem(args["order_key"]),
+                                          CardTextItem(args["product_id"]),
                                         ],
                                       ),
                                     ),

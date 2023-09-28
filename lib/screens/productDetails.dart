@@ -1262,24 +1262,25 @@ class _SelctedSizeState extends State<SelctedSize> {
       ),
       GestureDetector(
         onTap: () async {
-          if (user.id != null) {
-            if (isAddressAvailable(homeProvider)) {
-              createOrder(homeProvider, product['id']);
-            } else {
-              showBuyToUpdateAddressSnackbar();
-            }
-          } else {
-            final snackBar = SnackBar(
-              content: const Text('Please continue login to buy'),
-              action: SnackBarAction(
-                label: 'Click here',
-                onPressed: () {
-                  Navigator.pushNamed(context, authentication);
-                },
-              ),
-            );
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          }
+          codScreen;
+          // if (user.id != null) {
+          //   if (isAddressAvailable(homeProvider)) {
+          //     createOrder(homeProvider, product['id']);
+          //   } else {
+          //     showBuyToUpdateAddressSnackbar();
+          //   }
+          // } else {
+          //   final snackBar = SnackBar(
+          //     content: const Text('Please continue login to buy'),
+          //     action: SnackBarAction(
+          //       label: 'Click here',
+          //       onPressed: () {
+          //         Navigator.pushNamed(context, authentication);
+          //       },
+          //     ),
+          //   );
+          //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          // }
         },
         child: Container(
           margin: const EdgeInsets.only(top: 8, right: 16, left: 16),

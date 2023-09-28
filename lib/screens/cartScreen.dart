@@ -5,6 +5,7 @@ import 'dart:developer';
 
 import 'package:drortho/constants/imageconstants.dart';
 import 'package:drortho/constants/sizeconstants.dart';
+import 'package:drortho/screens/codScreen.dart';
 import 'package:drortho/screens/tabBarScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -252,41 +253,42 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                   GestureDetector(
                     onTap: () async {
-                      if (homeProvider.user.id != null) {
-                        if (isAddressAvailable(homeProvider)) {
-                          createOrder(homeProvider, cartProvider.cartItems,
-                              cartProvider);
-                        } else {
-                          final snackBar = SnackBar(
-                            content:
-                                const Text('Please update address to continue'),
-                            action: SnackBarAction(
-                              label: 'Click here',
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const TabBarScreen(
-                                              param: 1,
-                                            )));
-                              },
-                            ),
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        }
-                      } else {
-                        final snackBar = SnackBar(
-                          content: const Text('Please continue login to buy'),
-                          action: SnackBarAction(
-                            label: 'Click here',
-                            onPressed: () {
-                              Navigator.pushNamed(context, authentication);
-                            },
-                          ),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }
+                      Navigator.pushNamed(context, codScreen);
+                      // if (homeProvider.user.id != null) {
+                      //   if (isAddressAvailable(homeProvider)) {
+                      //     createOrder(homeProvider, cartProvider.cartItems,
+                      //         cartProvider);
+                      //   } else {
+                      //     final snackBar = SnackBar(
+                      //       content:
+                      //           const Text('Please update address to continue'),
+                      //       action: SnackBarAction(
+                      //         label: 'Click here',
+                      //         onPressed: () {
+                      //           Navigator.push(
+                      //               context,
+                      //               MaterialPageRoute(
+                      //                   builder: (context) =>
+                      //                       const TabBarScreen(
+                      //                         param: 1,
+                      //                       )));
+                      //         },
+                      //       ),
+                      //     );
+                      //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      //   }
+                      // } else {
+                      //   final snackBar = SnackBar(
+                      //     content: const Text('Please continue login to buy'),
+                      //     action: SnackBarAction(
+                      //       label: 'Click here',
+                      //       onPressed: () {
+                      //         Navigator.pushNamed(context, authentication);
+                      //       },
+                      //     ),
+                      //   );
+                      //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      // }
                     },
                     child: Container(
                       margin:
@@ -583,6 +585,7 @@ class _CartScreenState extends State<CartScreen> {
                 values["quantity"] = cartItem.quantity! + 1;
                 cartProvider.updateCartItems(
                     CartModel.fromMap(values), cartItem.id);
+                setState(() {});
               }
             },
             child: Container(
@@ -652,8 +655,10 @@ class _CartScreenState extends State<CartScreen> {
     for (final cartItem in cartList) {
       if (cartItem.onsale! == 1) {
         price += double.tryParse(cartItem.saleprice)!;
+        price *= cartItem.quantity;
       } else {
         price += double.tryParse(cartItem.regularprice)!;
+        price *= cartItem.quantity;
       }
     }
     return price;
