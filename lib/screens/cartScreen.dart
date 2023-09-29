@@ -254,6 +254,7 @@ class _CartScreenState extends State<CartScreen> {
                   GestureDetector(
                     onTap: () async {
                       Navigator.pushNamed(context, codScreen);
+
                       // if (homeProvider.user.id != null) {
                       //   if (isAddressAvailable(homeProvider)) {
                       //     createOrder(homeProvider, cartProvider.cartItems,

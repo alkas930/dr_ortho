@@ -103,7 +103,8 @@ class OrderDetailScreen extends StatelessWidget {
                                       child: Row(
                                         children: [
                                           CardTextItem(orderNumber),
-                                          CardTextItem(args["product_id"]),
+                                          CardTextItem(
+                                              args["customer_id"].toString()),
                                         ],
                                       ),
                                     ),
@@ -316,7 +317,7 @@ class OrderDetailScreen extends StatelessWidget {
           children: [
             Image.network(
               item["image"]["src"],
-              fit: BoxFit.cover,
+              // fit: BoxFit.cover,
               width: (width - 32) * 0.25,
               height: ((width - 32) * 0.25) * .75,
             ),

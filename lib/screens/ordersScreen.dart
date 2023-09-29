@@ -121,7 +121,7 @@ class OrderScreen extends StatelessWidget {
         final heightCalc = (((width - 32) * 0.25) * .75);
         images = Image.network(
           itemsList[0]["image"]["src"],
-          fit: BoxFit.cover,
+          // fit: BoxFit.cover,
           width: widthCalc,
           height: heightCalc,
         );

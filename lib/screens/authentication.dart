@@ -30,6 +30,14 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   final _client = ApiClient();
   bool agree = false;
 
+  bool _obsecureText = true;
+
+  void PassVisiblity() {
+    setState(() {
+      _obsecureText = !_obsecureText;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final homeProvider = Provider.of<HomeProvider>(context, listen: false);
@@ -353,13 +361,20 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
               child: TextFormField(
                 maxLines: 1,
                 controller: passwordInputController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                      onPressed: () {
+                        PassVisiblity();
+                      },
+                      icon: Icon(_obsecureText
+                          ? Icons.visibility_off_outlined
+                          : Icons.visibility)),
                   hintText: passwordHintText,
-                  hintStyle: TextStyle(color: hintTextColor),
-                  focusedBorder: OutlineInputBorder(
+                  hintStyle: const TextStyle(color: hintTextColor),
+                  focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: themeRed, width: 2),
                   ),
-                  border: OutlineInputBorder(
+                  border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(5),
                       ),
@@ -368,7 +383,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                 ),
                 style: const TextStyle(fontSize: 12),
                 textInputAction: TextInputAction.done,
-                obscureText: true,
+                obscureText: _obsecureText,
                 validator: (value) => value!.length < 8 || value.length > 16
                     ? 'Password should be 8-16 characters.'
                     : null,
@@ -378,7 +393,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
         ),
       ),
       _type == 0
-          ? Text('')
+          ? const Text('')
           : Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -424,7 +439,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
           children: [
             GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, forgotPassword);
+                Navigator.pushNamed(context, sendCode);
               },
               child: const Padding(
                 padding: EdgeInsets.symmetric(vertical: 8),
