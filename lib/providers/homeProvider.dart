@@ -19,7 +19,7 @@ class HomeProvider extends ChangeNotifier {
   final List banner = [];
   final List gridItems = [];
   final List blogs = [];
-  final List paymentGateways = [];
+  // final List paymentGateways = [];
 
   final List categoryItems = [];
   final Map productDetails = {};
@@ -60,8 +60,7 @@ class HomeProvider extends ChangeNotifier {
       if (response.isNotEmpty) {
         if (products.isNotEmpty) products.clear();
         products.addAll(response);
-        print(
-            'HomeProvider().paymentGateways ${HomeProvider().paymentGateways}');
+       
 
         notifyListeners();
       }

@@ -4,9 +4,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:drortho/constants/apiconstants.dart';
-import 'package:drortho/main.dart';
 import 'package:drortho/utilities/apiClient.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
 import 'package:provider/provider.dart';

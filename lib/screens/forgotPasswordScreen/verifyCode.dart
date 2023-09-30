@@ -1,7 +1,6 @@
 import 'package:drortho/components/searchcomponent.dart';
 import 'package:drortho/constants/colorconstants.dart';
 import 'package:drortho/constants/stringconstants.dart';
-import 'package:drortho/routes.dart';
 import 'package:drortho/screens/forgotPasswordScreen/forgotPassword.dart';
 import 'package:flutter/material.dart';
 

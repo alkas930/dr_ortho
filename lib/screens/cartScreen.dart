@@ -253,43 +253,42 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                   GestureDetector(
                     onTap: () async {
-                      Navigator.pushNamed(context, codScreen);
 
-                      // if (homeProvider.user.id != null) {
-                      //   if (isAddressAvailable(homeProvider)) {
-                      //     createOrder(homeProvider, cartProvider.cartItems,
-                      //         cartProvider);
-                      //   } else {
-                      //     final snackBar = SnackBar(
-                      //       content:
-                      //           const Text('Please update address to continue'),
-                      //       action: SnackBarAction(
-                      //         label: 'Click here',
-                      //         onPressed: () {
-                      //           Navigator.push(
-                      //               context,
-                      //               MaterialPageRoute(
-                      //                   builder: (context) =>
-                      //                       const TabBarScreen(
-                      //                         param: 1,
-                      //                       )));
-                      //         },
-                      //       ),
-                      //     );
-                      //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      //   }
-                      // } else {
-                      //   final snackBar = SnackBar(
-                      //     content: const Text('Please continue login to buy'),
-                      //     action: SnackBarAction(
-                      //       label: 'Click here',
-                      //       onPressed: () {
-                      //         Navigator.pushNamed(context, authentication);
-                      //       },
-                      //     ),
-                      //   );
-                      //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      // }
+                      if (homeProvider.user.id != null) {
+                        if (isAddressAvailable(homeProvider)) {
+                      
+                             Navigator.pushNamed(context, codScreen);
+                        } else {
+                          final snackBar = SnackBar(
+                            content:
+                                const Text('Please update address to continue'),
+                            action: SnackBarAction(
+                              label: 'Click here',
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const TabBarScreen(
+                                              param: 1,
+                                            )));
+                              },
+                            ),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }
+                      } else {
+                        final snackBar = SnackBar(
+                          content: const Text('Please continue login to buy'),
+                          action: SnackBarAction(
+                            label: 'Click here',
+                            onPressed: () {
+                              Navigator.pushNamed(context, authentication);
+                            },
+                          ),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
                     },
                     child: Container(
                       margin:
