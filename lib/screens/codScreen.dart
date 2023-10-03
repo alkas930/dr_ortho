@@ -281,130 +281,133 @@ class _CodScreenState extends State<CodScreen> {
 
 Widget OpenContentWithoutFrame(bool isLoading, HomeProvider homeProvider,
     isAddressAvailable, createOrder, context, getGateways, paymentGateway) {
-  return Scaffold(body: Consumer<CartProvider>(builder: (_, cartProvider, __) {
-    return Column(
-      children: [
-        const SearchComponent(
-          isBackEnabled: true,
-        ),
-        const Padding(
-          padding: EdgeInsets.only(left: 16, right: 16, top: 16),
-          child: Row(
-            children: [
-              Text(
-                'Select a payment method',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17),
-              ),
-            ],
+  return Expanded(
+    child:
+        Scaffold(body: Consumer<CartProvider>(builder: (_, cartProvider, __) {
+      return Column(
+        children: [
+          const SearchComponent(
+            isBackEnabled: true,
           ),
-        ),
-        isLoading
-            ? const Center(
-                heightFactor: 15,
-                child: CircularProgressIndicator(
-                  color: themeRed,
-                ))
-            : Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                child: Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(width: .4),
-                      borderRadius: BorderRadius.circular(8)),
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.only(left: 16, right: 16, top: 16),
-                    child: Column(
-                      children: [
-                        Column(
-                          children: getGateways(paymentGateway),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            if (homeProvider.user.id != null) {
-                              if (isAddressAvailable(homeProvider)) {
-                                createOrder(homeProvider,
-                                    cartProvider.cartItems, cartProvider);
+          const Padding(
+            padding: EdgeInsets.only(left: 16, right: 16, top: 16),
+            child: Row(
+              children: [
+                Text(
+                  'Select a payment method',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17),
+                ),
+              ],
+            ),
+          ),
+          isLoading
+              ? const Center(
+                  heightFactor: 15,
+                  child: CircularProgressIndicator(
+                    color: themeRed,
+                  ))
+              : Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(width: .4),
+                        borderRadius: BorderRadius.circular(8)),
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.only(left: 16, right: 16, top: 16),
+                      child: Column(
+                        children: [
+                          Column(
+                            children: getGateways(paymentGateway),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              if (homeProvider.user.id != null) {
+                                if (isAddressAvailable(homeProvider)) {
+                                  createOrder(homeProvider,
+                                      cartProvider.cartItems, cartProvider);
+                                } else {
+                                  final snackBar = SnackBar(
+                                    content: const Text(
+                                        'Please update address to continue'),
+                                    action: SnackBarAction(
+                                      label: 'Click here',
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const TabBarScreen(
+                                                      param: 1,
+                                                    )));
+                                      },
+                                    ),
+                                  );
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
+                                }
                               } else {
                                 final snackBar = SnackBar(
                                   content: const Text(
-                                      'Please update address to continue'),
+                                      'Please continue login to buy'),
                                   action: SnackBarAction(
                                     label: 'Click here',
                                     onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const TabBarScreen(
-                                                    param: 1,
-                                                  )));
+                                      Navigator.pushNamed(
+                                          context, authentication);
                                     },
                                   ),
                                 );
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(snackBar);
                               }
-                            } else {
-                              final snackBar = SnackBar(
-                                content:
-                                    const Text('Please continue login to buy'),
-                                action: SnackBarAction(
-                                  label: 'Click here',
-                                  onPressed: () {
-                                    Navigator.pushNamed(
-                                        context, authentication);
-                                  },
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(
+                                top: 20,
+                              ),
+                              width: double.infinity,
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              decoration: const BoxDecoration(
+                                  color: bottomBarColor,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5))),
+                              child: const Text(
+                                continueText,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
                                 ),
-                              );
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
-                            }
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                              top: 20,
+                                textAlign: TextAlign.center,
+                              ),
                             ),
-                            width: double.infinity,
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            decoration: const BoxDecoration(
-                                color: bottomBarColor,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5))),
-                            child: const Text(
-                              continueText,
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 13, horizontal: 32),
+                            child: Text(
+                              termsText,
                               style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
+                                color: Colors.black,
+                                fontSize: 10,
                               ),
                               textAlign: TextAlign.center,
                             ),
                           ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 13, horizontal: 32),
-                          child: Text(
-                            termsText,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 10,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              )
-      ],
-    );
-  }));
+                )
+        ],
+      );
+    })),
+  );
 }

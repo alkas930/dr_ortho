@@ -27,7 +27,7 @@ const String getCoupon = "/wp-json/wc/v3/coupons?code=";
 const String productReview = "/wp-json/wc/v3/products/reviews";
 const String productSize = "/wp-json/wc/v3/products?slug=";
 const String productVariationEndPoint = "/wp-json/wc/v3/products/";
-const String codEndpoint = "/wp-json/wc/v3/payment_gateways";
+const String codEndpoint = "/wp-json/wc/v3/payment_gateways"; //cash on delivery
 const String sendResetPasswordEmail = "/wp-json/bdpwr/v1/reset-password";
-const String validateCodeResetPassword = "/wp-json/bdpwr/v1/validate-code";
+const String validateCode = "/wp-json/bdpwr/v1/validate-code";
 const String setNewPassword = "/wp-json/bdpwr/v1/set-password";

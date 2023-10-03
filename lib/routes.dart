@@ -51,7 +51,9 @@ final routes = {
   productDetailsRoute: (context) => const ProductDetails(),
   tabsRoute: (context) => const TabBarScreen(),
   webviewRoute: (context) => const WebviewScreen(),
-  codScreen: (context) => const CodScreen(isScreen: true,),
+  codScreen: (context) => const CodScreen(
+        isScreen: true,
+      ),
   forgotPassword: (context) => const ForgotPassword(),
   sendCode: (context) => const SendCode(),
   verifyCode: (context) => const VerifyCode(),
