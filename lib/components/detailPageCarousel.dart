@@ -1,4 +1,5 @@
 import 'package:drortho/constants/colorconstants.dart';
+import 'package:drortho/constants/imageconstants.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/sizeconstants.dart';
@@ -82,14 +83,17 @@ class _DetailsCarouselState extends State<DetailsCarousel> {
               // const SizedBox(
               //   width: iconSize / 2,
               // ),
-              // SizedBox(
-              //   width: iconSize,
-              //   height: iconSize,
-              //   child: Image.asset(
-              //     shareImage,
-              //     fit: BoxFit.contain,
-              //   ),
-              // )
+              InkWell(
+                onTap: () {},
+                child: SizedBox(
+                  width: iconSize,
+                  height: iconSize,
+                  child: Image.asset(
+                    shareImage,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              )
             ],
           ),
         )

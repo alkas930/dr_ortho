@@ -192,6 +192,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: LoadingWrapper(
         child: SafeArea(
           child: Padding(

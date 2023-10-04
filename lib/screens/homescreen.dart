@@ -391,9 +391,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         width: homeNewArrialsHeight / 1.5,
                         height: homeNewArrialsHeight,
-                        child: Card(
-                          color: cardBackgroundColor,
-                          clipBehavior: Clip.hardEdge,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(7),
+                            color: cardBackgroundColor,
+                          ),
                           child: Column(
                             children: [
                               Expanded(
@@ -475,9 +477,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           EdgeInsets.only(left: index == 0 ? 16 : 4, right: 4),
                       width: homeCardHeight,
                       height: homeCardHeight,
-                      child: Card(
-                        color: cardBackgroundColor,
-                        clipBehavior: Clip.hardEdge,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(7),
+                          color: Color.fromARGB(237, 240, 239, 239),
+                        ),
                         child: Stack(
                           children: [
                             Column(
@@ -581,7 +585,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     margin:
                         EdgeInsets.only(left: index == 0 ? 16 : 4, right: 4),
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                        const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
                     width: 96,
                     color: cardBackgroundColor,
                     child: Column(

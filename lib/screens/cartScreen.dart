@@ -253,11 +253,12 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                   GestureDetector(
                     onTap: () async {
-
                       if (homeProvider.user.id != null) {
                         if (isAddressAvailable(homeProvider)) {
-                      
-                             Navigator.pushNamed(context, codScreen);
+                          Navigator.pushNamed(
+                            context,
+                            codScreen,
+                          );
                         } else {
                           final snackBar = SnackBar(
                             content:

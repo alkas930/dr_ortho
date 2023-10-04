@@ -75,22 +75,15 @@ class _CodScreenState extends State<CodScreen> {
                   _type = int.parse('$value');
                 });
               },
-              title: RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: data[i]['title'],
-                      style: const TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.w500),
-                    ),
-                  ],
-                ),
+              title: Text(
+                data[i]['title'],
+                style: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.w500),
               ),
             ),
           ),
         ),
       );
-
       i = i + 1;
     }
     return container;

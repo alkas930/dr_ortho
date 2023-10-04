@@ -77,8 +77,12 @@ class ItemsGrid extends StatelessWidget {
                 openProductDetailScreen(item['id']);
               },
               child: SizedBox(
-                child: Card(
-                  color: cardBackgroundColor,
+                child: Container(
+                  margin: EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(7),
+                    color: Color.fromARGB(237, 240, 239, 239),
+                  ),
                   clipBehavior: Clip.hardEdge,
                   child: Column(
                     children: [

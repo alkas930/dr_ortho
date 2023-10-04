@@ -324,8 +324,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                               ),
                               // CAROUSEL
                               Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 10),
                                 child: DetailsCarousel(
                                     width: width - 32, images: images),
                               ),
@@ -598,6 +598,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   ],
                                 ),
                               ),
+
                               Padding(
                                 padding: const EdgeInsets.only(
                                   left: 16,
@@ -605,13 +606,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 ),
                                 child: TextWrapper(
                                   text: "${product['meta_data']!.firstWhere(
-                                        (product) =>
-                                            product['key'] == 'about_product',
-                                        orElse: () => item,
-                                      )['value'].replaceAll('•', '●')}",
+                                    (product) =>
+                                        product['key'] == 'about_product',
+                                    orElse: () => item,
+                                  )['value']}",
                                   style: const TextStyle(color: bottomBarColor),
                                 ),
                               ),
+
                               const Padding(
                                 padding: EdgeInsets.symmetric(vertical: 8.0),
                                 child: Divider(),
@@ -667,9 +669,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                             left: index == 0 ? 16 : 4, right: 4),
                         width: homeNewArrialsHeight / 1.5,
                         height: homeNewArrialsHeight,
-                        child: Card(
-                          color: cardBackgroundColor,
-                          clipBehavior: Clip.hardEdge,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(7),
+                            color: const Color.fromARGB(237, 240, 239, 239),
+                          ),
                           child: Column(
                             children: [
                               Expanded(
