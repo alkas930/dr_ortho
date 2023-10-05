@@ -5,7 +5,6 @@ import 'dart:developer';
 
 import 'package:drortho/constants/imageconstants.dart';
 import 'package:drortho/constants/sizeconstants.dart';
-import 'package:drortho/screens/codScreen.dart';
 import 'package:drortho/screens/tabBarScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

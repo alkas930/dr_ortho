@@ -81,7 +81,7 @@ class ItemsGrid extends StatelessWidget {
                   margin: EdgeInsets.all(4),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(7),
-                    color: Color.fromARGB(237, 240, 239, 239),
+                    color: cardBackgroundColor,
                   ),
                   clipBehavior: Clip.hardEdge,
                   child: Column(

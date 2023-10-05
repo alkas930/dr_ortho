@@ -11,7 +11,7 @@ const Color hintTextColor = Color(0xff8B8B8B);
 const Color searchBorderColor = Color(0xff585858);
 //HOME CARD
 const Color strikethroughColor = Color(0xff999999);
-const Color cardBackgroundColor = Color.fromARGB(237, 240, 239, 239);
+const Color cardBackgroundColor = Color(0XFFF7F7F7);
 const Color testimonialsColor = Color(0xffECE9E6);
 //PRODUCT DETAIL SCREEM
 const Color startColor = Color(0xffEDB31F);

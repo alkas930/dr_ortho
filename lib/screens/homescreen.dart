@@ -480,7 +480,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(7),
-                          color: Color.fromARGB(237, 240, 239, 239),
+                          color: cardBackgroundColor,
                         ),
                         child: Stack(
                           children: [
@@ -584,10 +584,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Container(
                     margin:
                         EdgeInsets.only(left: index == 0 ? 16 : 4, right: 4),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
-                    width: 96,
-                    color: cardBackgroundColor,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 2,
+                    ),
+                    width: 70,
+                    // color: Color(0xffF7F7F7),
                     child: Column(
                       children: [
                         Expanded(
@@ -601,7 +602,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 10),
+                          style: const TextStyle(
+                              fontSize: 10, fontWeight: FontWeight.bold),
                         )
                       ],
                     ),

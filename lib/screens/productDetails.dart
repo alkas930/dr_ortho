@@ -3,6 +3,7 @@
 import 'dart:developer';
 
 import 'package:drortho/components/detailPageCarousel.dart';
+import 'package:drortho/components/starRating.dart';
 import 'package:drortho/constants/apiconstants.dart';
 import 'package:drortho/constants/imageconstants.dart';
 import 'package:drortho/models/cartModel.dart';
@@ -279,6 +280,37 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   ],
                                 ),
                               ),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 16),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        SmoothStarRating(
+                                          color: startColor,
+                                          borderColor: startColor,
+                                          rating: double.tryParse(
+                                                  product['average_rating']) ??
+                                              0,
+                                          size: 12,
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          " ${product['rating_count']} Reviews",
+                                          style: const TextStyle(
+                                              color: bottomBarColor,
+                                              fontSize: 2 + 10),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
                               //SHORT DESCRIPTION
                               Padding(
                                 padding: const EdgeInsets.only(
@@ -327,7 +359,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 16, vertical: 10),
                                 child: DetailsCarousel(
-                                    width: width - 32, images: images),
+                                    slug: product['slug'],
+                                    width: width - 32,
+                                    images: images),
                               ),
                               const Padding(
                                 padding: EdgeInsets.symmetric(
@@ -672,7 +706,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(7),
-                            color: const Color.fromARGB(237, 240, 239, 239),
+                            color: cardBackgroundColor,
                           ),
                           child: Column(
                             children: [
@@ -780,7 +814,9 @@ class _TextWrapperState extends State<TextWrapper>
           child: ConstrainedBox(
               constraints: isExpanded
                   ? const BoxConstraints()
-                  : const BoxConstraints(maxHeight: 70),
+                  : const BoxConstraints(
+                      maxHeight: 70,
+                    ),
               child: Text(
                 widget.text,
                 style: const TextStyle(fontSize: 16),
@@ -798,7 +834,7 @@ class _TextWrapperState extends State<TextWrapper>
           : TextButton.icon(
               icon: const Icon(Icons.arrow_downward, color: themeRed),
               label: const Text(
-                'Read more',
+                'See more product details',
                 style: TextStyle(color: themeRed),
               ),
               onPressed: () => setState(() => isExpanded = true))
@@ -964,7 +1000,9 @@ class _SelctedSizeState extends State<SelctedSize> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(
+    BuildContext context,
+  ) {
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
     List attributes = product['attributes']!;
     return Column(children: [

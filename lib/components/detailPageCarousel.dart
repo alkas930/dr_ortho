@@ -1,20 +1,37 @@
 import 'package:drortho/constants/colorconstants.dart';
 import 'package:drortho/constants/imageconstants.dart';
 import 'package:flutter/material.dart';
+// import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 
+import '../constants/apiconstants.dart';
 import '../constants/sizeconstants.dart';
 
 class DetailsCarousel extends StatefulWidget {
   final double width;
+  final slug;
   final List images;
-  const DetailsCarousel({super.key, required this.width, required this.images});
+  const DetailsCarousel(
+      {super.key, required this.width, required this.images, this.slug});
 
   @override
-  State<DetailsCarousel> createState() => _DetailsCarouselState();
+  State<DetailsCarousel> createState() => _DetailsCarouselState(slug: slug);
 }
 
 class _DetailsCarouselState extends State<DetailsCarousel> {
   int _pageIndex = 0;
+
+  final slug;
+
+  _DetailsCarouselState({required this.slug});
+
+  //share the Selected Image
+
+  void shareImages(slug) async {
+    Share.share(baseURL.toString() +
+        productDetailsEndpoint.toString() +
+        slug.toString());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +101,9 @@ class _DetailsCarouselState extends State<DetailsCarousel> {
               //   width: iconSize / 2,
               // ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  shareImages(slug);
+                },
                 child: SizedBox(
                   width: iconSize,
                   height: iconSize,
