@@ -37,7 +37,6 @@ const String newMemberText = " New member?";
 const String signInText = "Sign in.";
 const String alreadyMemberText = " Already a member?";
 
-
 const String continueText = "Continue";
 const String forgotPasswordText = "Forgot Password?";
 const String skipText = "Skip";
@@ -78,3 +77,12 @@ const String proceedToBuyText = "Proceed to Buy";
 const String pleaseLoginText = "Please login to continue";
 const String loginText = "Login";
 const String saveText = "Save";
+
+//Review Screen
+const String titleReviewText = 'Title your review';
+const String sharePhotoText = 'Title your review';
+const String writeReviewText = "Write a product review";
+const String rateText = 'how would you rate it?';
+const String hintTitleText = "What's most important to know?";
+const String hintWriteText =
+    "What did you like or dislike? What did you use the product for?";

@@ -655,6 +655,136 @@ class _ProductDetailsState extends State<ProductDetails> {
 
                               newArrivals(homeProvider.products, homeProvider,
                                   openProductDetailScreen),
+                              const Padding(
+                                padding: EdgeInsets.only(top: 15),
+                                child: Divider(),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 16, right: 16, top: 16, bottom: 16),
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.pushNamed(context, reviewPage);
+                                  },
+                                  child: Container(
+                                    height: 40,
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                        color: Colors.transparent,
+                                        border: Border.all(
+                                            width: .3,
+                                            color: cardBackgroundColor),
+                                        boxShadow: const <BoxShadow>[
+                                          BoxShadow(
+                                              blurStyle: BlurStyle.outer,
+                                              blurRadius: 1)
+                                        ],
+                                        borderRadius: BorderRadius.circular(8)),
+                                    child: const Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text('Write a review'),
+                                          Icon(
+                                            Icons.arrow_forward_ios_rounded,
+                                            size: 14,
+                                            color: Colors.black,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const Divider(),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 16,
+                                  right: 16,
+                                ),
+                                child: SizedBox(
+                                  height: 100,
+                                  width: double.infinity,
+                                  child: Expanded(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Builder(builder: (context) {
+                                          return Expanded(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                  children: [
+                                                    const Row(
+                                                      children: [
+                                                        Text(
+                                                          'Customer reviews',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  bottomBarColor,
+                                                              fontSize: 2 + 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        SmoothStarRating(
+                                                          color: startColor,
+                                                          borderColor:
+                                                              startColor,
+                                                          rating: double.tryParse(
+                                                                  product[
+                                                                      'average_rating']) ??
+                                                              0,
+                                                          size: 17,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                          " ${product['rating_count']} Reviews",
+                                                          style: const TextStyle(
+                                                              color:
+                                                                  bottomBarColor,
+                                                              fontSize: 2 + 11),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                                const Icon(
+                                                  Icons
+                                                      .arrow_forward_ios_rounded,
+                                                  size: 16,
+                                                  color: Colors.black,
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        }),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              const Divider(),
                             ],
                           ),
                         )

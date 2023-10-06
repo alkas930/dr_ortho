@@ -10,21 +10,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await Firebase.initializeApp();
-  // HttpOverrides.global = PostHttpOverrides();
 
   runApp(const MyApp());
 }
-
-// class PostHttpOverrides extends HttpOverrides {
-
-//   @override
-//   HttpClient createHttpClient(context) {
-
-//     return super.createHttpClient(context)
-//       ..badCertificateCallback =
-//           (X509Certificate cert, String host, int port) => true;
-//   }
-// }
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {

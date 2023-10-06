@@ -16,6 +16,7 @@ import 'package:drortho/screens/tabBarScreen.dart';
 import 'package:drortho/screens/webview.dart';
 import 'package:drortho/screens/profileScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:drortho/screens/review_Screen.dart';
 
 const initialRoute = "/";
 const authentication = "/authentication";
@@ -34,6 +35,7 @@ const codScreen = "/codScreen";
 const forgotPassword = "/forgotpassword";
 const sendCode = "/sendCode";
 const verifyCode = "/verifyCode";
+const reviewPage = "/review_Screen";
 
 final routes = {
   initialRoute: (context) => const SplashScreen(),
@@ -50,6 +52,7 @@ final routes = {
   orderDetailRoute: (context) => const OrderDetailScreen(),
   productDetailsRoute: (context) => const ProductDetails(),
   tabsRoute: (context) => const TabBarScreen(),
+  reviewPage: (context) => const ReviewScreen(),
   webviewRoute: (context) => const WebviewScreen(),
   codScreen: (context) => const CodScreen(
         isScreen: true,
