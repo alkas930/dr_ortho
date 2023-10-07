@@ -708,78 +708,71 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 child: SizedBox(
                                   height: 100,
                                   width: double.infinity,
-                                  child: Expanded(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Builder(builder: (context) {
-                                          return Expanded(
-                                            child: Row(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Builder(builder: (context) {
+                                        return Row(
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                                  MainAxisAlignment.spaceAround,
                                               children: [
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
+                                                const Row(
                                                   children: [
-                                                    const Row(
-                                                      children: [
-                                                        Text(
-                                                          'Customer reviews',
-                                                          style: TextStyle(
-                                                              color:
-                                                                  bottomBarColor,
-                                                              fontSize: 2 + 14,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        SmoothStarRating(
-                                                          color: startColor,
-                                                          borderColor:
-                                                              startColor,
-                                                          rating: double.tryParse(
-                                                                  product[
-                                                                      'average_rating']) ??
-                                                              0,
-                                                          size: 17,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        Text(
-                                                          " ${product['rating_count']} Reviews",
-                                                          style: const TextStyle(
-                                                              color:
-                                                                  bottomBarColor,
-                                                              fontSize: 2 + 11),
-                                                        ),
-                                                      ],
+                                                    Text(
+                                                      'Customer reviews',
+                                                      style: TextStyle(
+                                                          color: bottomBarColor,
+                                                          fontSize: 2 + 14,
+                                                          fontWeight:
+                                                              FontWeight.bold),
                                                     ),
                                                   ],
                                                 ),
-                                                const Icon(
-                                                  Icons
-                                                      .arrow_forward_ios_rounded,
-                                                  size: 16,
-                                                  color: Colors.black,
+                                                Expanded(
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      SmoothStarRating(
+                                                        color: startColor,
+                                                        borderColor: startColor,
+                                                        rating: double.tryParse(
+                                                                product[
+                                                                    'average_rating']) ??
+                                                            0,
+                                                        size: 17,
+                                                      ),
+                                                      const Icon(
+                                                        Icons
+                                                            .arrow_forward_ios_rounded,
+                                                        size: 16,
+                                                        color: Colors.black,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      " ${product['rating_count']} Reviews",
+                                                      style: const TextStyle(
+                                                          color: bottomBarColor,
+                                                          fontSize: 2 + 11),
+                                                    ),
+                                                  ],
                                                 ),
                                               ],
                                             ),
-                                          );
-                                        }),
-                                      ],
-                                    ),
+                                          ],
+                                        );
+                                      }),
+                                    ],
                                   ),
                                 ),
                               ),

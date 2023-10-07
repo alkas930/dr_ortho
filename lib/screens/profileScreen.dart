@@ -468,7 +468,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: Text(
                               getAddress("first_name"),
                               style: const TextStyle(
-                                  fontSize: 10, color: hintTextColor),
+                                  fontSize: 12, color: hintTextColor),
                             ),
                           ),
                           Padding(
@@ -476,7 +476,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: Text(
                               getAddress("last_name"),
                               style: const TextStyle(
-                                  fontSize: 10, color: hintTextColor),
+                                  fontSize: 12, color: hintTextColor),
                             ),
                           ),
                           Padding(
@@ -484,7 +484,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: Text(
                               getAddress("address_1"),
                               style: const TextStyle(
-                                  fontSize: 10, color: hintTextColor),
+                                  fontSize: 12, color: hintTextColor),
                             ),
                           ),
                           Padding(
@@ -492,7 +492,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: Text(
                               getAddress("address_2"),
                               style: const TextStyle(
-                                  fontSize: 10, color: hintTextColor),
+                                  fontSize: 12, color: hintTextColor),
                             ),
                           ),
                           Padding(
@@ -500,7 +500,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: Text(
                               getAddress("city"),
                               style: const TextStyle(
-                                  fontSize: 10, color: hintTextColor),
+                                  fontSize: 12, color: hintTextColor),
                             ),
                           ),
                           Padding(
@@ -508,7 +508,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: Text(
                               getAddress("state"),
                               style: const TextStyle(
-                                  fontSize: 10, color: hintTextColor),
+                                  fontSize: 12, color: hintTextColor),
                             ),
                           ),
                           Padding(
@@ -516,7 +516,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: Text(
                               getAddress("postcode"),
                               style: const TextStyle(
-                                  fontSize: 10, color: hintTextColor),
+                                  fontSize: 12, color: hintTextColor),
                             ),
                           )
                         ] else ...[

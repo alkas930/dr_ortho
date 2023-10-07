@@ -10,6 +10,7 @@ const emptyImage = 'assets/empty.png';
 const shareImage = 'assets/share.png';
 const favouriteOutlinedImage = 'assets/favouriteOutlined.png';
 const privacyImage = 'assets/privacy.png';
+const cameraImage = 'DrOrtho/assets/camera.png';
 const cashImage = 'assets/cash.png';
 const deliveryImage = 'assets/delivery.png';
 const returnImage = 'assets/return.png';
