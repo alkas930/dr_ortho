@@ -112,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     openProductDetailScreen),
                 ItemsGrid(
                   width: width,
-                  gridItems: homeProvider.gridItems.take(4).toList(),
+                  gridItems: homeProvider.gridItems,
                   homeProvider: homeProvider,
                   isViewAllVisible: true,
                 ),
@@ -568,7 +568,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget topCategoriesBar(List categories, HomeProvider homeProvider) {
     return categories.isNotEmpty
         ? Container(
-            margin: const EdgeInsets.symmetric(vertical: 16),
+            margin: const EdgeInsets.symmetric(vertical: 10),
             height: categoryItemHeight,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -584,11 +584,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Container(
                     margin:
                         EdgeInsets.only(left: index == 0 ? 16 : 4, right: 4),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 2,
-                    ),
                     width: 70,
-                    // color: Color(0xffF7F7F7),
                     child: Column(
                       children: [
                         Expanded(

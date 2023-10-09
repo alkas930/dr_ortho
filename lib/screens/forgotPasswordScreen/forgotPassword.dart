@@ -5,6 +5,7 @@ import 'package:drortho/constants/colorconstants.dart';
 import 'package:drortho/constants/stringconstants.dart';
 import 'package:drortho/screens/authentication.dart';
 import 'package:drortho/utilities/apiClient.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ForgotPassword extends StatefulWidget {
@@ -29,14 +30,18 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   TextEditingController passwordController2 = TextEditingController();
 
   resetPass() async {
-    print('-------------------------------------');
+    if (kDebugMode) {
+      print('-------------------------------------');
+    }
     try {
       final response = await ApiClient().callPostAPI(setNewPassword, {
         "email": email.toString(),
-        "password": "password",
+        "password": passwordController.text,
         "code": code.toString(),
       });
-      print(response);
+      if (kDebugMode) {
+        print(response);
+      }
       if (response['data']['status'] == 200) {
         setState(() {});
         await Navigator.pushAndRemoveUntil(
@@ -46,7 +51,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             (route) => false);
       }
     } catch (e) {
-      print('something went wrong $e');
+      if (kDebugMode) {
+        print('something went wrong $e');
+      }
     }
   }
 

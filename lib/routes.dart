@@ -52,7 +52,9 @@ final routes = {
   orderDetailRoute: (context) => const OrderDetailScreen(),
   productDetailsRoute: (context) => const ProductDetails(),
   tabsRoute: (context) => const TabBarScreen(),
-  reviewPage: (context) => const ReviewScreen(),
+  reviewPage: (context) => const ReviewScreen(
+        images: [],
+      ),
   webviewRoute: (context) => const WebviewScreen(),
   codScreen: (context) => const CodScreen(
         isScreen: true,

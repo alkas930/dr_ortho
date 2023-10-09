@@ -55,7 +55,8 @@ dependencies:
   url_launcher: ^6.1.11
   webview_flutter: ^4.2.4
   dotted_border: ^2.1.0
-  image_picker: 1.0.4
+  image_picker: ^1.0.4
+  flutter_rating_stars: ^1.0.3+4
 
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to

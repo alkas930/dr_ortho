@@ -7,6 +7,7 @@ const String userBottomNav = "User";
 const searchHint = "Search Dr Ortho";
 // HOME SCREEN
 const String newArrivalsText = "Have a look at our New Arrivals";
+const String simmilarProductText = "Have a look at our simmilar Product";
 const String orthoticRangeText = "Latest Orthotic Range";
 const String youtubeVideosText = "Dr. Ortho for your Complete Joint Care";
 const String blogText = "Blog";
@@ -80,7 +81,7 @@ const String saveText = "Save";
 
 //Review Screen
 const String titleReviewText = 'Title your review';
-const String sharePhotoText = 'Share a video or photo';
+const String sharePhotoText = 'Share a photo review';
 const String writeReviewText = "Write a product review";
 const String rateText = 'how would you rate it?';
 

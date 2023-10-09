@@ -6,6 +6,7 @@ import 'dart:developer';
 import 'package:drortho/constants/imageconstants.dart';
 import 'package:drortho/constants/sizeconstants.dart';
 import 'package:drortho/screens/tabBarScreen.dart';
+import 'package:drortho/utilities/shimmerLoading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -330,7 +331,6 @@ class _CartScreenState extends State<CartScreen> {
                                       children: [
                                         Container(
                                           width: size.width / 4.5,
-                                          decoration: BoxDecoration(),
                                           child: Image.network(
                                             cartItem.image!,
                                             height: cartItemHeight,
@@ -522,17 +522,143 @@ class _CartScreenState extends State<CartScreen> {
                                 const Padding(
                                   padding: EdgeInsets.symmetric(vertical: 16),
                                   child: Divider(),
-                                )
+                                ),
                               ],
                             ),
                           );
                         }),
-                  )
+                  ),
+                  simmilarProduct(homeProvider.products, homeProvider,
+                      openProductDetailScreen)
                 ],
               )
             : emptyCartView(width);
       }),
     );
+  }
+
+  Widget simmilarProduct(List products, HomeProvider homeProvider,
+      Function openProductDetailScreen) {
+    return products.isNotEmpty
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Text(
+                  simmilarProductText,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: bottomBarColor,
+                      fontSize: 2 + 12),
+                ),
+              ),
+              SizedBox(
+                height: homeNewArrialsHeight,
+                child: ListView.builder(
+                  clipBehavior: Clip.none,
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  itemCount: products.length,
+                  itemBuilder: (context, index) {
+                    final product = products[index];
+                    final List images = product['images'];
+                    return GestureDetector(
+                      onTap: () {
+                        openProductDetailScreen(product['id'], homeProvider);
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(
+                            left: index == 0 ? 16 : 4, right: 4),
+                        width: homeNewArrialsHeight / 1.5,
+                        height: homeNewArrialsHeight,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(7),
+                            color: cardBackgroundColor,
+                          ),
+                          child: Column(
+                            children: [
+                              Expanded(
+                                flex: 3,
+                                child: Shimmer(
+                                  child: ShimmerLoading(
+                                      isLoading: images.isEmpty,
+                                      child: images.isEmpty
+                                          ? Container(
+                                              decoration: const BoxDecoration(
+                                                  color: Colors.white),
+                                            )
+                                          : Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Image.network(
+                                                  images[0]['src']),
+                                            )),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 4.0),
+                                        child: Text(
+                                          product['name'],
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                              fontSize: 2 + 10,
+                                              fontWeight: FontWeight.bold),
+                                          textAlign: TextAlign.start,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 4, horizontal: 4),
+                                      child: RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            if (product['on_sale']) ...[
+                                              TextSpan(
+                                                  text:
+                                                      "Rs. ${product['regular_price']} ",
+                                                  style: const TextStyle(
+                                                      color: strikethroughColor,
+                                                      decoration: TextDecoration
+                                                          .lineThrough,
+                                                      fontSize: 2 + 8))
+                                            ],
+                                            TextSpan(
+                                                text:
+                                                    "Rs. ${product['on_sale'] ? product['sale_price'] : product['regular_price']}",
+                                                style: const TextStyle(
+                                                    color: themeRed,
+                                                    fontSize: 2 + 12)),
+                                          ],
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          )
+        : const SizedBox.shrink();
   }
 
   Container quantityChangeWrapper(

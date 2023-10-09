@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:drortho/screens/allProducts.dart';
 import 'package:flutter/material.dart';
 import 'package:dynamic_grid_view/dynamic_grid_view.dart';
 import '../constants/colorconstants.dart';
@@ -50,8 +51,15 @@ class ItemsGrid extends StatelessWidget {
               isViewAllVisible
                   ? GestureDetector(
                       onTap: () {
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) =>
+                        //             AllProductsScreen(gridItems: gridItems)));
                         Navigator.pushNamed(context, allProductsRoute,
-                            arguments: {"category": orthoticRangeText});
+                            arguments: {
+                              "category": orthoticRangeText,
+                            });
                       },
                       child: const Text(
                         viewAllText,
@@ -68,7 +76,7 @@ class ItemsGrid extends StatelessWidget {
         DynamicGridView(
           width: width,
           horizontalPadding: 16,
-          dataSet: gridItems,
+          dataSet: gridItems.take(4).toList(),
           child: (context, index) {
             final item = gridItems[index];
             final List images = item['images'];
