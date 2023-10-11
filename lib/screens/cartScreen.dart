@@ -5,6 +5,8 @@ import 'dart:developer';
 
 import 'package:drortho/constants/imageconstants.dart';
 import 'package:drortho/constants/sizeconstants.dart';
+import 'package:drortho/screens/codScreen.dart';
+import 'package:drortho/screens/forgotPasswordScreen/codScreeen.dart';
 import 'package:drortho/screens/tabBarScreen.dart';
 import 'package:drortho/utilities/shimmerLoading.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +39,7 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
 //RAZORPAY
   final _razorpay = Razorpay();
+  bool isDismissible = false;
 
   @override
   void initState() {
@@ -255,10 +258,20 @@ class _CartScreenState extends State<CartScreen> {
                     onTap: () async {
                       if (homeProvider.user.id != null) {
                         if (isAddressAvailable(homeProvider)) {
-                          Navigator.pushNamed(
-                            context,
-                            codScreen,
-                          );
+                          void dismiss() {
+                            setState(() {
+                              isDismissible = true;
+                            });
+                          }
+
+                          showModalBottomSheet(
+                              // isDismissible: isDismissible,
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(16))),
+                              isScrollControlled: true,
+                              context: context,
+                              builder: (context) => PaymentOptions());
                         } else {
                           final snackBar = SnackBar(
                             content:

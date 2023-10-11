@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:drortho/components/searchcomponent.dart';
 import 'package:drortho/constants/apiconstants.dart';
 import 'package:drortho/constants/colorconstants.dart';
 import 'package:drortho/constants/stringconstants.dart';
@@ -10,27 +9,30 @@ import 'package:drortho/providers/homeProvider.dart';
 import 'package:drortho/routes.dart';
 import 'package:drortho/screens/tabBarScreen.dart';
 import 'package:drortho/utilities/apiClient.dart';
-import 'package:drortho/utilities/loadingWrapper.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
-class CodScreen extends StatefulWidget {
-  final bool isScreen;
-  const CodScreen({super.key, required this.isScreen});
+class PaymentOptions extends StatefulWidget {
+  Function? dismiss;
+  PaymentOptions({super.key, this.dismiss});
 
   @override
-  State<CodScreen> createState() => _CodScreenState();
+  State<PaymentOptions> createState() => PaymentOptionsState(dismiss: dismiss);
 }
 
-class _CodScreenState extends State<CodScreen> {
-  //RAZORPAY
+class PaymentOptionsState extends State<PaymentOptions>
+    with SingleTickerProviderStateMixin {
+  final Function? dismiss;
+  PaymentOptionsState({this.dismiss});
+  late AnimationController _controller;
+
   final _razorpay = Razorpay();
 
   List paymentGateway = [];
   bool isLoading = true;
   String selectedMethod = '';
-
   getCodPayment() async {
     try {
       final List response = await ApiClient().callGetAPI(codEndpoint);
@@ -75,6 +77,8 @@ class _CodScreenState extends State<CodScreen> {
               onChanged: (value) {
                 setState(() {
                   selectedMethod = data[i]['id'];
+
+                  print(selectedMethod);
                 });
               },
               title: Text(
@@ -236,174 +240,151 @@ class _CodScreenState extends State<CodScreen> {
 
   @override
   void initState() {
-    getCodPayment();
     super.initState();
+    getCodPayment();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    );
+    _controller.forward();
   }
 
   @override
   void dispose() {
     super.dispose();
-
+    _controller.dispose();
     _razorpay.clear();
   }
 
   @override
-  Widget build(BuildContext context) {
-    final homeProvider = Provider.of<HomeProvider>(context, listen: false);
-
-    if (widget.isScreen) {
-      return LoadingWrapper(
-          child: Scaffold(
-        body: Column(
-          children: [
-            OpenContentWithoutFrame(isLoading, homeProvider, isAddressAvailable,
-                createOrder, context, getGateways, paymentGateway),
-          ],
+  Widget build(
+    BuildContext context,
+  ) {
+    Size size = MediaQuery.of(context).size;
+    return SafeArea(
+      child: Stack(clipBehavior: Clip.none, children: [
+        Positioned(
+          top: -60,
+          right: 12,
+          child: FloatingActionButton.small(
+              backgroundColor: Colors.white,
+              clipBehavior: Clip.antiAlias,
+              onPressed: () {
+                // dismiss!();
+                Navigator.of(context).pop();
+              },
+              child: const Icon(
+                Icons.close,
+                color: Colors.black,
+              )),
         ),
-      ));
-    } else {
-      return OpenContentWithoutFrame(
-          isLoading,
-          homeProvider,
-          isAddressAvailable,
-          createOrder,
-          context,
-          getGateways,
-          paymentGateway);
-    }
-  }
-}
-
-Widget OpenContentWithoutFrame(bool isLoading, HomeProvider homeProvider,
-    isAddressAvailable, createOrder, context, getGateways, paymentGateway) {
-  return Expanded(
-    child:
-        Scaffold(body: Consumer<CartProvider>(builder: (_, cartProvider, __) {
-      return Container(
-        height: paymentGateway.length * .1,
-        child: Column(
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 16, right: 16, top: 16),
-              child: Row(
-                children: [
-                  Text(
-                    'Select a payment method',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17),
-                  ),
-                ],
-              ),
+        Container(
+          height: size.height * 0.55,
+          // height: (paymentGateway.length ?? 2.0) * 100,
+          decoration: const BoxDecoration(
+            // color: Colors.white,
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(20),
             ),
-            isLoading
-                ? const Center(
-                    heightFactor: 15,
-                    child: CircularProgressIndicator(
-                      color: themeRed,
-                    ))
-                : Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 16),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(width: .4),
-                          borderRadius: BorderRadius.circular(8)),
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.only(left: 16, right: 16, top: 16),
-                        child: Column(
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 15,
+                  ),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 16, right: 16, top: 16),
+                        child: Row(
                           children: [
-                            Column(
-                              children: getGateways(paymentGateway),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                if (homeProvider.user.id != null) {
-                                  if (isAddressAvailable(homeProvider)) {
-                                    createOrder(homeProvider,
-                                        cartProvider.cartItems, cartProvider);
-                                  } else {
-                                    final snackBar = SnackBar(
-                                      content: const Text(
-                                          'Please update address to continue'),
-                                      action: SnackBarAction(
-                                        label: 'Click here',
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const TabBarScreen(
-                                                        param: 1,
-                                                      )));
-                                        },
-                                      ),
-                                    );
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(snackBar);
-                                  }
-                                } else {
-                                  final snackBar = SnackBar(
-                                    content: const Text(
-                                        'Please continue login to buy'),
-                                    action: SnackBarAction(
-                                      label: 'Click here',
-                                      onPressed: () {
-                                        Navigator.pushNamed(
-                                            context, authentication);
-                                      },
-                                    ),
-                                  );
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(snackBar);
-                                }
-                              },
-                              child: Container(
-                                margin: const EdgeInsets.only(
-                                  top: 20,
-                                ),
-                                width: double.infinity,
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 12),
-                                decoration: const BoxDecoration(
-                                    color: bottomBarColor,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5))),
-                                child: const Text(
-                                  continueText,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 13, horizontal: 32),
-                              child: Text(
-                                termsText,
-                                style: TextStyle(
+                            Text(
+                              'Select a payment method',
+                              style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 10,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17),
                             ),
                           ],
                         ),
                       ),
-                    ),
-                  )
-          ],
+                    ],
+                  ),
+                ),
+                const Divider(
+                  thickness: 1,
+                ),
+                isLoading
+                    ? const Center(
+                        heightFactor: 10,
+                        child: CircularProgressIndicator(
+                          color: themeRed,
+                        ))
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 16),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(width: .4),
+                              borderRadius: BorderRadius.circular(8)),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 16, right: 16, top: 16),
+                            child: Column(
+                              children: [
+                                Column(
+                                  children: getGateways(paymentGateway),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                GestureDetector(
+                                  onTap: () => getGateways(paymentGateway),
+                                  child: Container(
+                                    margin: const EdgeInsets.only(
+                                      top: 20,
+                                    ),
+                                    width: double.infinity,
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12),
+                                    decoration: const BoxDecoration(
+                                        color: bottomBarColor,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5))),
+                                    child: const Text(
+                                      continueText,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                                const Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 13, horizontal: 32),
+                                  child: Text(
+                                    termsText,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 10,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+              ],
+            ),
+          ),
         ),
-      );
-    })),
-  );
+      ]),
+    );
+  }
 }

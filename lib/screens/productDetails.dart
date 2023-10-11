@@ -9,6 +9,7 @@ import 'package:drortho/constants/imageconstants.dart';
 import 'package:drortho/models/cartModel.dart';
 import 'package:drortho/models/userModel.dart';
 import 'package:drortho/providers/cartProvider.dart';
+import 'package:drortho/screens/forgotPasswordScreen/codScreeen.dart';
 import 'package:drortho/screens/tabBarScreen.dart';
 import 'package:drortho/utilities/apiClient.dart';
 import 'package:html/parser.dart' as htmlparser;
@@ -1423,11 +1424,32 @@ class _SelctedSizeState extends State<SelctedSize> {
       ),
       GestureDetector(
         onTap: () async {
-          if (user.id != null) {
+          if (homeProvider.user.id != null) {
             if (isAddressAvailable(homeProvider)) {
-              createOrder(homeProvider, product['id']);
+              showModalBottomSheet(
+                  // isDismissible: isDismissible,
+                  shape: const RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(16))),
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (context) => PaymentOptions());
             } else {
-              showBuyToUpdateAddressSnackbar();
+              final snackBar = SnackBar(
+                content: const Text('Please update address to continue'),
+                action: SnackBarAction(
+                  label: 'Click here',
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const TabBarScreen(
+                                  param: 1,
+                                )));
+                  },
+                ),
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
           } else {
             final snackBar = SnackBar(

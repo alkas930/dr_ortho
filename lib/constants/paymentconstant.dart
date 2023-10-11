@@ -1,0 +1,3 @@
+class paymentContant {
+  final paymentMethod = '';
+}
