@@ -9,7 +9,7 @@ import 'package:drortho/constants/imageconstants.dart';
 import 'package:drortho/models/cartModel.dart';
 import 'package:drortho/models/userModel.dart';
 import 'package:drortho/providers/cartProvider.dart';
-import 'package:drortho/screens/forgotPasswordScreen/codScreeen.dart';
+import 'package:drortho/screens/codScreeen.dart';
 import 'package:drortho/screens/tabBarScreen.dart';
 import 'package:drortho/utilities/apiClient.dart';
 import 'package:html/parser.dart' as htmlparser;
@@ -665,7 +665,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     left: 16, right: 16, top: 16, bottom: 16),
                                 child: InkWell(
                                   onTap: () {
-                                    Navigator.pushNamed(context, reviewPage);
+                                    Navigator.pushNamed(context, reviewPage,
+                                        arguments: product);
                                   },
                                   child: Container(
                                     height: 40,

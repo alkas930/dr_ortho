@@ -17,6 +17,7 @@ import 'package:drortho/screens/webview.dart';
 import 'package:drortho/screens/profileScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:drortho/screens/review_Screen.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 const initialRoute = "/";
 const authentication = "/authentication";
@@ -52,9 +53,7 @@ final routes = {
   orderDetailRoute: (context) => const OrderDetailScreen(),
   productDetailsRoute: (context) => const ProductDetails(),
   tabsRoute: (context) => const TabBarScreen(),
-  reviewPage: (context) => const ReviewScreen(
-        images: [],
-      ),
+  reviewPage: (context) => ReviewScreen(),
   webviewRoute: (context) => const WebviewScreen(),
   codScreen: (context) => const CodScreen(
         isScreen: true,

@@ -57,6 +57,7 @@ dependencies:
   dotted_border: ^2.1.0
   image_picker: ^1.0.4
   flutter_rating_stars: ^1.0.3+4
+  flutter_rating_bar: ^4.0.1
 
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to

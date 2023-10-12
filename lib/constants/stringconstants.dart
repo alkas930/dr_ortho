@@ -80,11 +80,11 @@ const String loginText = "Login";
 const String saveText = "Save";
 
 //Review Screen
-const String titleReviewText = 'Title your review';
+const String titleReviewText = 'Name';
 const String sharePhotoText = 'Share a photo review';
 const String writeReviewText = "Write a product review";
 const String rateText = 'how would you rate it?';
 
-const String hintTitleText = "What's most important to know?";
+const String hintTitleText = "Enter name";
 const String hintWriteText =
     "What did you like or dislike? What did you use the product for?";

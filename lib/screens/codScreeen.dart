@@ -169,14 +169,14 @@ class PaymentOptionsState extends State<PaymentOptions>
     const snackBar = SnackBar(
       content: Text('Something went wrong, please try again'),
     );
-    ScaffoldMessenger.of(context as BuildContext).showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   showPaymentSuccessSnackbar() {
     const snackBar = SnackBar(
       content: Text('Order created successfully'),
     );
-    ScaffoldMessenger.of(context as BuildContext).showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   isAddressAvailable(HomeProvider homeProvider) {
