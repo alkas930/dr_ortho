@@ -9,10 +9,13 @@ import 'package:drortho/providers/homeProvider.dart';
 import 'package:drortho/routes.dart';
 import 'package:drortho/screens/tabBarScreen.dart';
 import 'package:drortho/utilities/apiClient.dart';
+import 'package:drortho/utilities/loadingWrapper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class PaymentOptions extends StatefulWidget {
   Function? dismiss;
@@ -29,6 +32,7 @@ class PaymentOptionsState extends State<PaymentOptions>
   late AnimationController _controller;
 
   final _razorpay = Razorpay();
+  bool loader = false;
 
   List paymentGateway = [];
   bool isLoading = true;
@@ -76,9 +80,7 @@ class PaymentOptionsState extends State<PaymentOptions>
               groupValue: selectedMethod,
               onChanged: (value) {
                 setState(() {
-                  selectedMethod = data[i]['id'];
-
-                  print(selectedMethod);
+                  selectedMethod = value;
                 });
               },
               title: Text(
@@ -104,7 +106,7 @@ class PaymentOptionsState extends State<PaymentOptions>
       await ApiClient().callPutAPI("$createOrderEndpoint/$id", data);
       showPaymentSuccessSnackbar();
       homeProvider.getUserOrders();
-      Navigator.pushNamed(context as BuildContext, ordersRoute);
+      Navigator.pushNamed(context, ordersRoute);
       homeProvider.hideLoader();
       cartProvider.cleanCartItems();
     } catch (e) {
@@ -119,8 +121,9 @@ class PaymentOptionsState extends State<PaymentOptions>
     try {
       final data = {
         "customer_id": homeProvider.user.id,
-        "payment_method": "razorpay",
-        "payment_method_title": "Credit Card/Debit Card/NetBanking",
+        "payment_method": selectedMethod,
+        "payment_method_title": paymentGateway
+            .firstWhere((element) => element['id'] == selectedMethod)['title'],
         "set_paid": true,
         "line_items": [],
         "shipping_lines": [
@@ -144,16 +147,20 @@ class PaymentOptionsState extends State<PaymentOptions>
       if (response.containsKey("id") &&
           response.containsKey("order_key") &&
           response.containsKey("total")) {
-        double totalPrice = double.parse(response["total"]) * 100;
-        final Map razorpayResponse = await ApiClient().createRazorPayOrder(
-            totalPrice, response["order_key"], response["id"].toString());
-        if (razorpayResponse.containsKey("id")) {
-          homeProvider.hideLoader();
-          openRazorPay(homeProvider, razorpayResponse["id"], totalPrice,
-              response["id"], cartProvider);
+        if (selectedMethod.contains('cod')) {
+          updateOrder('completed', response['id'], homeProvider, cartProvider);
         } else {
-          homeProvider.hideLoader();
-          showSnackbar();
+          double totalPrice = double.parse(response["total"]) * 100;
+          final Map razorpayResponse = await ApiClient().createRazorPayOrder(
+              totalPrice, response["order_key"], response["id"].toString());
+          if (razorpayResponse.containsKey("id")) {
+            homeProvider.hideLoader();
+            openRazorPay(homeProvider, razorpayResponse["id"], totalPrice,
+                response["id"], cartProvider);
+          } else {
+            homeProvider.hideLoader();
+            showSnackbar();
+          }
         }
       } else {
         homeProvider.hideLoader();
@@ -209,10 +216,6 @@ class PaymentOptionsState extends State<PaymentOptions>
         'wallets': ['paytm']
       },
       'theme': {'color': '#D60007'}
-      // 'prefill': {
-      //   'contact': '9123456789',
-      //   'email': 'gaurav.kumar@example.com'
-      // }
     };
     handlePaymentSuccess(
       PaymentSuccessResponse response,
@@ -260,131 +263,146 @@ class PaymentOptionsState extends State<PaymentOptions>
   Widget build(
     BuildContext context,
   ) {
+    final homeProvider = Provider.of<HomeProvider>(
+      context,
+      listen: false,
+    );
     Size size = MediaQuery.of(context).size;
-    return SafeArea(
-      child: Stack(clipBehavior: Clip.none, children: [
-        Positioned(
-          top: -60,
-          right: 12,
-          child: FloatingActionButton.small(
-              backgroundColor: Colors.white,
-              clipBehavior: Clip.antiAlias,
-              onPressed: () {
-                // dismiss!();
-                Navigator.of(context).pop();
-              },
-              child: const Icon(
-                Icons.close,
-                color: Colors.black,
-              )),
-        ),
-        Container(
-          height: size.height * 0.55,
-          // height: (paymentGateway.length ?? 2.0) * 100,
-          decoration: const BoxDecoration(
-            // color: Colors.white,
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(20),
-            ),
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 15,
-                  ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 16, right: 16, top: 16),
-                        child: Row(
-                          children: [
-                            Text(
-                              'Select a payment method',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 17),
-                            ),
-                          ],
-                        ),
+
+    return LoadingWrapper(
+      child: Consumer<CartProvider>(builder: (_, cartProvider, __) {
+        return SafeArea(
+          child: Stack(clipBehavior: Clip.none, children: [
+            // Positioned(
+            //   top: -60,
+            //   right: 12,
+            //   child: FloatingActionButton.small(
+            //       backgroundColor: Colors.white,
+            //       clipBehavior: Clip.antiAlias,
+            //       onPressed: () {
+            //         // dismiss!();
+            //         Navigator.of(context).pop();
+            //       },
+            //       child: const Icon(
+            //         Icons.close,
+            //         color: Colors.black,
+            //       )),
+            // ),
+            Container(
+              height: size.height * 0.55,
+              // height: (paymentGateway.length ?? 2.0) * 100,
+              decoration: const BoxDecoration(
+                // color: Colors.white,
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(20),
+                ),
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 15,
                       ),
-                    ],
-                  ),
-                ),
-                const Divider(
-                  thickness: 1,
-                ),
-                isLoading
-                    ? const Center(
-                        heightFactor: 10,
-                        child: CircularProgressIndicator(
-                          color: themeRed,
-                        ))
-                    : Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 16),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(width: .4),
-                              borderRadius: BorderRadius.circular(8)),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 16, right: 16, top: 16),
-                            child: Column(
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding:
+                                EdgeInsets.only(left: 16, right: 16, top: 16),
+                            child: Row(
                               children: [
-                                Column(
-                                  children: getGateways(paymentGateway),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                GestureDetector(
-                                  onTap: () => getGateways(paymentGateway),
-                                  child: Container(
-                                    margin: const EdgeInsets.only(
-                                      top: 20,
-                                    ),
-                                    width: double.infinity,
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 12),
-                                    decoration: const BoxDecoration(
-                                        color: bottomBarColor,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(5))),
-                                    child: const Text(
-                                      continueText,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                ),
-                                const Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 13, horizontal: 32),
-                                  child: Text(
-                                    termsText,
-                                    style: TextStyle(
+                                Text(
+                                  'Select a payment method',
+                                  style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 10,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17),
                                 ),
                               ],
                             ),
                           ),
-                        ),
-                      )
-              ],
+                        ],
+                      ),
+                    ),
+                    const Divider(
+                      thickness: 1,
+                    ),
+                    isLoading
+                        ? const Center(
+                            heightFactor: 10,
+                            child: CircularProgressIndicator(
+                              color: themeRed,
+                            ))
+                        : Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 16),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(width: .4),
+                                  borderRadius: BorderRadius.circular(8)),
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 16, right: 16, top: 16),
+                                child: Column(
+                                  children: [
+                                    Column(
+                                      children: getGateways(paymentGateway),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        createOrder(
+                                            homeProvider,
+                                            cartProvider.cartItems,
+                                            cartProvider);
+                                      },
+                                      child: Container(
+                                        margin: const EdgeInsets.only(
+                                          top: 20,
+                                        ),
+                                        width: double.infinity,
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 12),
+                                        decoration: const BoxDecoration(
+                                            color: bottomBarColor,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(5))),
+                                        child: const Text(
+                                          continueText,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+                                    const Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 13, horizontal: 32),
+                                      child: Text(
+                                        termsText,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 10,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                  ],
+                ),
+              ),
             ),
-          ),
-        ),
-      ]),
+          ]),
+        );
+      }),
     );
   }
 }

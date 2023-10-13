@@ -2,7 +2,8 @@ import 'package:drortho/screens/allProducts.dart';
 import 'package:drortho/screens/authentication.dart';
 import 'package:drortho/screens/cartScreen.dart';
 import 'package:drortho/screens/categoryItemsScreen.dart';
-import 'package:drortho/screens/codScreen.dart';
+import 'package:drortho/screens/paymentOption.dart';
+
 import 'package:drortho/screens/forgotPasswordScreen/forgotPassword.dart';
 import 'package:drortho/screens/forgotPasswordScreen/sendCode.dart';
 import 'package:drortho/screens/forgotPasswordScreen/verifyCode.dart';
@@ -55,9 +56,7 @@ final routes = {
   tabsRoute: (context) => const TabBarScreen(),
   reviewPage: (context) => ReviewScreen(),
   webviewRoute: (context) => const WebviewScreen(),
-  codScreen: (context) => const CodScreen(
-        isScreen: true,
-      ),
+  codScreen: (context) => PaymentOptions(),
   forgotPassword: (context) => const ForgotPassword(),
   sendCode: (context) => const SendCode(),
   verifyCode: (context) => const VerifyCode(),

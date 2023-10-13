@@ -9,9 +9,10 @@ import 'package:drortho/constants/imageconstants.dart';
 import 'package:drortho/models/cartModel.dart';
 import 'package:drortho/models/userModel.dart';
 import 'package:drortho/providers/cartProvider.dart';
-import 'package:drortho/screens/codScreeen.dart';
+import 'package:drortho/screens/paymentOption.dart';
 import 'package:drortho/screens/tabBarScreen.dart';
 import 'package:drortho/utilities/apiClient.dart';
+import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:html/parser.dart' as htmlparser;
 import 'package:html/dom.dart' as dom;
 
@@ -237,12 +238,60 @@ class _ProductDetailsState extends State<ProductDetails> {
           i++;
           continue;
         }
-        reviews.add(Row(
-          children: [Text(response[i]['reviewer'])],
+        reviews.add(Column(
+          children: [
+            Row(
+              children: [
+                CircleAvatar(
+                  maxRadius: 14,
+                  foregroundImage:
+                      NetworkImage(response[i]['reviewer_avatar_urls']['24']),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text(
+                    response[i]['reviewer'],
+                    style: TextStyle(fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 5),
+              child: Row(
+                children: [
+                  Text(response[i]['reviewer_email']),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: Row(
+                children: [
+                  SmoothStarRating(
+                    color: startColor,
+                    borderColor: startColor,
+                    rating:
+                        double.tryParse(response[i]['rating'].toString()) ?? 0,
+                    size: 15,
+                  ),
+                ],
+              ),
+            ),
+            Row(
+              children: [
+                Text(_parseHtmlString(response[i]['review'])),
+              ],
+            ),
+            Divider()
+          ],
         ));
         i++;
       }
-      return Row(children: reviews);
+      return Padding(
+        padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
+        child: Column(children: reviews),
+      );
     }
 
     String calcDiscountPercent(salePrice, regularPrice) {
@@ -730,7 +779,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   right: 16,
                                 ),
                                 child: SizedBox(
-                                  height: 100,
+                                  height: 80,
                                   width: double.infinity,
                                   child: Row(
                                     mainAxisAlignment:
@@ -772,12 +821,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                             0,
                                                         size: 17,
                                                       ),
-                                                      const Icon(
-                                                        Icons
-                                                            .arrow_forward_ios_rounded,
-                                                        size: 16,
-                                                        color: Colors.black,
-                                                      ),
                                                     ],
                                                   ),
                                                 ),
@@ -796,6 +839,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                                           ],
                                         );
                                       }),
+                                      Icon(
+                                        Icons.keyboard_arrow_down_outlined,
+                                        // size: 17,
+                                      )
                                     ],
                                   ),
                                 ),
@@ -1451,7 +1498,7 @@ class _SelctedSizeState extends State<SelctedSize> {
           if (homeProvider.user.id != null) {
             if (isAddressAvailable(homeProvider)) {
               showModalBottomSheet(
-                  // isDismissible: isDismissible,
+                  isDismissible: false,
                   shape: const RoundedRectangleBorder(
                       borderRadius:
                           BorderRadius.vertical(top: Radius.circular(16))),

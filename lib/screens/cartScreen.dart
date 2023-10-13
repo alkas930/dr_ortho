@@ -5,8 +5,7 @@ import 'dart:developer';
 
 import 'package:drortho/constants/imageconstants.dart';
 import 'package:drortho/constants/sizeconstants.dart';
-import 'package:drortho/screens/codScreen.dart';
-import 'package:drortho/screens/codScreeen.dart';
+import 'package:drortho/screens/paymentOption.dart';
 import 'package:drortho/screens/tabBarScreen.dart';
 import 'package:drortho/utilities/shimmerLoading.dart';
 import 'package:flutter/material.dart';
@@ -192,6 +191,7 @@ class _CartScreenState extends State<CartScreen> {
           homeProvider.hideLoader();
           openRazorPay(homeProvider, razorpayResponse["id"], totalPrice,
               response["id"], cartProvider);
+          Navigator.pushNamed(context, ordersRoute);
         } else {
           homeProvider.hideLoader();
           showSnackbar();
@@ -265,7 +265,7 @@ class _CartScreenState extends State<CartScreen> {
                           }
 
                           showModalBottomSheet(
-                              // isDismissible: isDismissible,
+                              isDismissible: false,
                               shape: const RoundedRectangleBorder(
                                   borderRadius: BorderRadius.vertical(
                                       top: Radius.circular(16))),
