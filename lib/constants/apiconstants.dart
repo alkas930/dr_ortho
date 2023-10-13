@@ -25,6 +25,7 @@ const String searchEndpoint = "/wp-json/wc/v3/products?status=publish&search=";
 const String getProductFromSlug = "/wp-json/wc/v3/products?slug=";
 const String getCoupon = "/wp-json/wc/v3/coupons?code=";
 const String productReview = "/wp-json/wc/v3/products/reviews";
+const String getproductReview = "/wp-json/wc/v3/products/reviews";
 const String productSize = "/wp-json/wc/v3/products?slug=";
 const String productVariationEndPoint = "/wp-json/wc/v3/products/";
 const String codEndpoint = "/wp-json/wc/v3/payment_gateways"; //cash on delivery

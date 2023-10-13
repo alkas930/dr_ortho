@@ -19,6 +19,7 @@ class HomeProvider extends ChangeNotifier {
   final List banner = [];
   final List gridItems = [];
   final List blogs = [];
+  final List review = [];
   // final List paymentGateways = [];
 
   final List categoryItems = [];
@@ -60,7 +61,6 @@ class HomeProvider extends ChangeNotifier {
       if (response.isNotEmpty) {
         if (products.isNotEmpty) products.clear();
         products.addAll(response);
-       
 
         notifyListeners();
       }
@@ -88,6 +88,20 @@ class HomeProvider extends ChangeNotifier {
         notifyListeners();
       }
       log('\x1B[31mERROR: ${e}\x1B[0m');
+    }
+  }
+
+  getReview(id) async {
+    print('------------------');
+    try {
+      final response = await ApiClient().callGetAPI(
+        getproductReview,
+      );
+      if (response.isNotEmpty) {
+        review.addAll(response);
+      }
+    } catch (e) {
+      rethrow;
     }
   }
 
@@ -200,6 +214,7 @@ class HomeProvider extends ChangeNotifier {
       final Map response =
           await _provider.callGetAPI("$productDetailsEndpoint$id");
       if (response.isNotEmpty) {
+        getReview(id);
         productDetails.addAll(response);
       }
       isLoading = false;

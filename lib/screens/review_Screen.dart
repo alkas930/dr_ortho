@@ -24,6 +24,7 @@ import 'package:dotted_border/dotted_border.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class ReviewScreen extends StatefulWidget {
   final emailInputController;
@@ -446,6 +447,14 @@ class _ReviewScreenState extends State<ReviewScreen> {
                             ),
                           ),
                         ),
+                        // RoundedLoadingButton(controller: nameController., onPressed: (){}, child: Text(
+                        //         'Submit Review',
+                        //         style: TextStyle(
+                        //           color: Colors.white,
+                        //           fontSize: 14,
+                        //         ),
+                        //         textAlign: TextAlign.center,
+                        //       ), )
                       ],
                     ),
                   ),

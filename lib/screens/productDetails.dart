@@ -54,6 +54,9 @@ class _ProductDetailsState extends State<ProductDetails> {
     final double height = MediaQuery.of(context).size.height;
     final Map args = (ModalRoute.of(context)!.settings.arguments ?? {}) as Map;
 
+    List<Widget> reviews = [];
+    bool loader = true;
+
     //RAZORPAY
     final _razorpay = Razorpay();
 
@@ -225,6 +228,23 @@ class _ProductDetailsState extends State<ProductDetails> {
       }
     }
 
+    Widget getReview(response, id) {
+      List<Widget> reviews = [];
+      int i = 0;
+
+      while (i < response.length) {
+        if (response[i]['product_id'] != id) {
+          i++;
+          continue;
+        }
+        reviews.add(Row(
+          children: [Text(response[i]['reviewer'])],
+        ));
+        i++;
+      }
+      return Row(children: reviews);
+    }
+
     String calcDiscountPercent(salePrice, regularPrice) {
       try {
         final double percent =
@@ -251,6 +271,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                 builder: (_, homeProvider, __) {
                   final Map products = homeProvider.productDetails;
                   final Map product = products ?? {};
+                  final List reviews = homeProvider.review ?? [];
+
                   final List images =
                       homeProvider.productDetails['images'] ?? [];
                   return product.isNotEmpty
@@ -780,6 +802,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               ),
 
                               const Divider(),
+                              getReview(reviews, product['id'])
                             ],
                           ),
                         )
