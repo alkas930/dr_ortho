@@ -7,6 +7,7 @@ import 'package:path/path.dart';
 import '../constants/dbconstants.dart';
 
 class DatabaseProvider {
+  
   Future<Database> initializedDB() async {
     String path = await getDatabasesPath();
     return openDatabase(

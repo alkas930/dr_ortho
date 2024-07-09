@@ -17,14 +17,9 @@ import 'package:drortho/screens/tabBarScreen.dart';
 import 'package:drortho/screens/webview.dart';
 import 'package:drortho/screens/profileScreen.dart';
 import 'package:flutter/material.dart';
-<<<<<<< Updated upstream
-import 'package:drortho/screens/review_Screen.dart';
-import 'package:flutter_html/flutter_html.dart';
-=======
 import 'package:drortho/screens/review_screen.dart';
 import 'package:drortho/screens/more_screen.dart';
 import 'package:order_tracker/order_tracker.dart';
->>>>>>> Stashed changes
 
 const initialRoute = "/";
 const authentication = "/authentication";
@@ -69,10 +64,7 @@ final routes = {
   searchScreen: (context) => const SearchScreen(),
   allProductsRoute: (context) => const AllProductsScreen(),
   qrScannerRoute: (context) => const QrScanner(),
-<<<<<<< Updated upstream
-=======
   productInfo: (context) => const ProdcutInformation(),
   moreScreenRoute: (context) => const MoreScreen(),
   orderTrackRoute: (context) => PackageTracker(),
->>>>>>> Stashed changes
 };

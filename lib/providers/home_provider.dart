@@ -372,7 +372,9 @@ class HomeProvider extends ChangeNotifier {
 
   getHomeData() async {
     isLoading = true;
+
     notifyListeners();
+
     try {
       final Map response = await _provider.callGetAPI(homeEndpoint);
       if (response.containsKey('data')) {

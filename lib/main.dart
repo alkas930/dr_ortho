@@ -35,6 +35,8 @@ class MyApp extends StatelessWidget {
         title: 'Dr Ortho',
         initialRoute: initialRoute,
         routes: routes,
+
+        
       ),
     );
   }

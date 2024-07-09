@@ -16,7 +16,6 @@ class CartProvider extends ChangeNotifier {
   }
 
   Future<int> insertCartItems(CartModel item) async {
-
     int result = 0;
     final Database db = await DatabaseProvider().initializedDB();
     // for (var item in items) {
